@@ -62,6 +62,42 @@ Para corrigir isto, você deve seguir estes passos:
 - Passo 5: Limpe o Cache usando `flutter clean`
 - Pronto, o projeto está pronto para ser executado.
 
+## Passo 4: Modelos e Rótulos
+
+Dentro de seu projeto, crie uma pasta chamada [asserts](./project/assets/) e coloque seu modelo `.tflite` e seu arquivo `labels.txt`
+
+**OBS**:
+
+O arquivo labels.txt deve conter as classes ou categorias que o modelo de aprendizado de máquina pode prever. Cada linha do arquivo deve representar uma classe, e a ordem das linhas deve corresponder à ordem das saídas do modelo. EX:
+
+```txt
+Cat
+Dog
+Bird
+Car
+Tree
+```
+
+### Regras para o arquivo `labels.txt`
+
+- Uma classe por linha: Cada linha deve conter o nome de uma classe.
+- Ordem importa: A ordem das classes no arquivo deve corresponder à ordem das saídas do modelo. Por exemplo, se o modelo retorna 0 para "Cat", 1 para "Dog", e assim por diante, o arquivo deve seguir essa ordem.
+- Sem números ou índices: Apenas os nomes das classes devem estar presentes, sem números ou índices adicionais.
+
+### Configurando imports no pubspec.yaml
+
+Em seu arquivo [pubspec.yaml](./project/pubspec.yaml) adicione uma sessão para seus assets como neste exemplo:
+
+```yml
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/labels.txt
+    - assets/yolo11n_float16.tflite
+    - assets/yolo11n_float32.tflite
+```
+
 ## Executando o Projeto
 
 Para executar no emulador do android studio, use `flutter run -d emulator-5554`

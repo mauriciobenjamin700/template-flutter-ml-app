@@ -1,39 +1,33 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
-//import '../controllers/classify.dart';
+
+import '../schemas/result.dart';
 
 class ResultsPage extends StatelessWidget {
   final File imageFile;
+  final PredictionResult result;
 
-  const ResultsPage({super.key, required this.imageFile});
+  const ResultsPage({super.key, required this.imageFile, required this.result});
 
   @override
   Widget build(BuildContext context) {
-
-    //final classifyController = ClassifyController();
-
     return Scaffold(
-      appBar: AppBar(title: const Text("Imagem Capturada")),
+      appBar: AppBar(title: const Text("Resultado da Classificação")),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'Classificação: ',
-              style: TextStyle(fontSize: 20),
+            Text(
+              "Classe: ${result.classIndex}",
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
+            Image.file(imageFile, width: 300, height: 300, fit: BoxFit.cover),
             const SizedBox(height: 20),
-            Image.file(
-              imageFile,
-              width: 300,
-              height: 300,
-              fit: BoxFit.cover,
+            Text(
+              "Confiança: ${result.score}", // Exibe o resultado da predição
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 20),
-            const Text(
-              'Confiança: ',
-              style: TextStyle(fontSize: 20),
-            )
           ],
         ),
       ),

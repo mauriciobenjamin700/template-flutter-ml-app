@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io'; // Para manipular o arquivo da imagem
+import './controllers/classify.dart';
 
 import 'pages/results.dart';
 
@@ -36,6 +37,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   File? _selectedImage; // Variável para armazenar a imagem selecionada
+  final classifyController = ClassifyController();
 
   Future<void> _pickImageFromGallery() async {
     final picker = ImagePicker();
@@ -45,10 +47,15 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         _selectedImage = File(pickedFile.path); // Armazena a imagem selecionada
       });
+      await classifyController.predict(_selectedImage!); // Chama o método de predição
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ResultsPage(imageFile: _selectedImage!),
+          builder:
+            (context) => ResultsPage(
+              imageFile: _selectedImage!,
+              result: classifyController.valuePredict, // Passe o resultado processado
+            ),
         ),
       );
     } else {
@@ -64,10 +71,17 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         _selectedImage = File(pickedFile.path); // Armazena a foto capturada
       });
+      await classifyController.predict(
+        _selectedImage!,
+      ); // Chama o método de predição
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ResultsPage(imageFile: _selectedImage!),
+          builder:
+            (context) => ResultsPage(
+              imageFile: _selectedImage!,
+              result: classifyController.valuePredict, // Passe o resultado processado
+            ),
         ),
       );
     } else {

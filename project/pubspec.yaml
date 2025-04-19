@@ -26,3 +26,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/labels.txt
+    - assets/yolo11n_float16.tflite
+    - assets/yolo11n_float32.tflite
