@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io'; // Para manipular o arquivo da imagem
 
 void main() {
   runApp(const MyApp());
@@ -31,12 +33,32 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  File? _selectedImage; // Variável para armazenar a imagem selecionada
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  Future<void> _pickImageFromGallery() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _selectedImage = File(pickedFile.path); // Armazena a imagem selecionada
+      });
+    } else {
+      print('Nenhuma imagem foi selecionada.');
+    }
+  }
+
+  Future<void> _takePhotoWithCamera() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      setState(() {
+        _selectedImage = File(pickedFile.path); // Armazena a foto capturada
+      });
+    } else {
+      print('Nenhuma foto foi tirada.');
+    }
   }
 
   @override
@@ -64,20 +86,14 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               IconButton(
-                onPressed: () {
-                  // Adicione a lógica para abrir a câmera aqui
-                  print('Abrir câmera');
-                },
+                onPressed: _takePhotoWithCamera,
                 icon: const Icon(Icons.camera_alt),
                 iconSize: 120,
                 tooltip: "Abrir câmera",
               ),
               const SizedBox(width: 40), // Espaçamento entre os botões
               IconButton(
-                onPressed: () {
-                  // Adicione a lógica para abrir a câmera aqui
-                  print('Abrir galeria');
-                },
+                onPressed: _pickImageFromGallery,
                 icon: const Icon(Icons.photo),
                 iconSize: 120,
                 tooltip: "Abrir Galeria",
@@ -89,7 +105,21 @@ class _MyHomePageState extends State<MyHomePage> {
             "Escolha uma foto \n como preferir",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 28),
-          )
+          ),
+          const SizedBox(height: 20),
+          _selectedImage != null 
+          ? // Verifica se uma imagem foi selecionada
+            Image.file(
+              _selectedImage!,
+              width: 200,
+              height: 200,
+              fit: BoxFit.cover,
+            )
+          :
+            const Text(
+              "Nenhuma imagem selecionada",
+              style: TextStyle(fontSize: 18),
+            ),
           ],
         )
         
