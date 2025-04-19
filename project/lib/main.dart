@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io'; // Para manipular o arquivo da imagem
 
-import './pages//display_image_page.dart';
+import 'pages/results.dart';
 
 void main() {
   runApp(const MyApp());
@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => DisplayImagePage(imageFile: _selectedImage!),
+          builder: (context) => ResultsPage(imageFile: _selectedImage!),
         ),
       );
     } else {
@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => DisplayImagePage(imageFile: _selectedImage!),
+          builder: (context) => ResultsPage(imageFile: _selectedImage!),
         ),
       );
     } else {

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
+//import '../controllers/classify.dart';
 
-class DisplayImagePage extends StatelessWidget {
+class ResultsPage extends StatelessWidget {
   final File imageFile;
 
-  const DisplayImagePage({super.key, required this.imageFile});
+  const ResultsPage({super.key, required this.imageFile});
 
   @override
   Widget build(BuildContext context) {
+
+    //final classifyController = ClassifyController();
+
     return Scaffold(
       appBar: AppBar(title: const Text("Imagem Capturada")),
       body: Center(
