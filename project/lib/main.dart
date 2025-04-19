@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io'; // Para manipular o arquivo da imagem
 
+import './pages//display_image_page.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -43,6 +45,12 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         _selectedImage = File(pickedFile.path); // Armazena a imagem selecionada
       });
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DisplayImagePage(imageFile: _selectedImage!),
+        ),
+      );
     } else {
       print('Nenhuma imagem foi selecionada.');
     }
@@ -56,6 +64,12 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         _selectedImage = File(pickedFile.path); // Armazena a foto capturada
       });
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DisplayImagePage(imageFile: _selectedImage!),
+        ),
+      );
     } else {
       print('Nenhuma foto foi tirada.');
     }
@@ -106,20 +120,6 @@ class _MyHomePageState extends State<MyHomePage> {
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 28),
           ),
-          const SizedBox(height: 20),
-          _selectedImage != null 
-          ? // Verifica se uma imagem foi selecionada
-            Image.file(
-              _selectedImage!,
-              width: 200,
-              height: 200,
-              fit: BoxFit.cover,
-            )
-          :
-            const Text(
-              "Nenhuma imagem selecionada",
-              style: TextStyle(fontSize: 18),
-            ),
           ],
         )
         
