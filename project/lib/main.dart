@@ -47,6 +47,8 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         _selectedImage = File(pickedFile.path); // Armazena a imagem selecionada
       });
+      debugPrint("Imagem selecionada: ${_selectedImage!.path}");
+      classifyController.cleanResult();
       await classifyController.predict(_selectedImage!); // Chama o método de predição
       Navigator.push(
         context,
@@ -71,6 +73,8 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         _selectedImage = File(pickedFile.path); // Armazena a foto capturada
       });
+      debugPrint("Imagem selecionada: ${_selectedImage!.path}");
+      classifyController.cleanResult();
       await classifyController.predict(
         _selectedImage!,
       ); // Chama o método de predição

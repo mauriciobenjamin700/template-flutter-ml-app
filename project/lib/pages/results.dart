@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 import '../schemas/result.dart';
+import '../utils/format.dart';
 
 class ResultsPage extends StatelessWidget {
   final File imageFile;
@@ -17,14 +18,33 @@ class ResultsPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "Classe: ${result.classIndex}",
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            FutureBuilder<String>(
+              future: getLabelById(
+                result.classIndex,
+              ), // Carrega a classe de forma assíncrona
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator(); // Exibe um indicador de carregamento
+                } else if (snapshot.hasError) {
+                  return const Text(
+                    "Erro ao carregar a classe",
+                    style: TextStyle(color: Colors.red, fontSize: 18),
+                  );
+                } else {
+                  return Text(
+                    "Classe: ${snapshot.data}", // Exibe a classe carregada
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                }
+              },
             ),
             Image.file(imageFile, width: 300, height: 300, fit: BoxFit.cover),
             const SizedBox(height: 20),
             Text(
-              "Confiança: ${result.score}", // Exibe o resultado da predição
+              "Confiança: ${formatToPercentage(result.score)}", // Exibe o resultado da predição
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
