@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:project/schemas/result.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import '../core/constants.dart';
-import '../services/predict.dart';
+import '../services/classify.dart';
 
 class ClassifyController extends ChangeNotifier {
   String? imagePath;
@@ -12,7 +12,7 @@ class ClassifyController extends ChangeNotifier {
   late Interpreter interpreter;
   PredictionResult valuePredict = Constants.value;
   bool isError = false;
-  final controller = PredictService();
+  final controller = ClassifyService();
 
   void initController() async {
     controller.initPredict();
@@ -36,15 +36,6 @@ class ClassifyController extends ChangeNotifier {
     } catch (e) {
       valuePredict = Constants.value;
       isError = true;
-    }
-  }
-
-  String formatOutput(int value) {
-    debugPrint("Valor do resultado: $value");
-    if (value == 1) {
-      return 'Resultado ${double.parse(value.toStringAsFixed(1))}: Vermifuga detectada';
-    } else {
-      return 'Resultado ${double.parse(value.toStringAsFixed(1))}: Vermifuga não detectada';
     }
   }
 }

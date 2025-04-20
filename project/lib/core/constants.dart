@@ -1,8 +1,8 @@
 import '../schemas/result.dart';
 
 class Constants {
-  static String model = "assets/yolo11n_float32.tflite";
-  static String labels = "assets/labels.txt";
+  static String model = "assets/classify/yolo11n-cls_float16.tflite";
+  static String labels = "assets/classify/labels.txt";
   static const logo = "assets/images/logo.jpeg";
   static PredictionResult value = PredictionResult(
     classIndex: -1,

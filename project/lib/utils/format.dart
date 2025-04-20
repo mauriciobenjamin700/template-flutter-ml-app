@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart' show rootBundle;
+import "../core/constants.dart";
 
 String formatToPercentage(double value) {
   return "${(value * 100).toStringAsFixed(2).replaceAll('.', ',')}%";
@@ -10,7 +11,7 @@ String formatToDecimal(double value) {
 Future<String> getLabelById(int id) async {
   try {
     // Carrega o conteúdo do arquivo labels.txt
-    final labelsData = await rootBundle.loadString('assets/labels.txt');
+    final labelsData = await rootBundle.loadString(Constants.labels);
     // Divide o conteúdo em linhas
     final labels = labelsData.split('\n').where((label) => label.isNotEmpty).toList();
 
